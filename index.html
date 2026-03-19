@@ -3,54 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini AI: Chat & Image Creator</title>
+    <title>Gemini 3 AI: Chat & Image Creator</title>
     <style>
         :root { --primary: #007bff; --secondary: #28a745; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 600px; background: white; border-radius: 12px; shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 20px; border: 1px solid #e0e0e0; }
-        header { background: var(--primary); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; }
+        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 600px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 20px; }
+        header { background: var(--primary); color: white; padding: 15px; text-align: center; font-weight: bold; }
         
-        /* Chat Styling */
         #chat-box { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #eee; }
-        .msg { padding: 10px 14px; border-radius: 18px; max-width: 80%; font-size: 0.95rem; line-height: 1.4; }
-        .user { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 2px; }
-        .ai { align-self: flex-start; background: #e9ecef; color: #333; border-bottom-left-radius: 2px; }
+        .msg { padding: 10px 14px; border-radius: 18px; max-width: 80%; font-size: 0.95rem; }
+        .user { align-self: flex-end; background: var(--primary); color: white; }
+        .ai { align-self: flex-start; background: #e9ecef; color: #333; }
 
-        /* Image Styling */
         #image-result { min-height: 200px; display: flex; justify-content: center; align-items: center; padding: 15px; background: #fafafa; border-top: 2px dashed #ddd; }
-        #generated-img { max-width: 100%; border-radius: 8px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        #generated-img { max-width: 100%; border-radius: 8px; display: none; }
 
-        /* Controls */
-        .controls { padding: 15px; display: flex; gap: 10px; background: #fff; }
-        input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary); }
-        button { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; color: white; }
+        .controls { padding: 15px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        input { width: 90%; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; margin-bottom: 10px; }
+        button { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; color: white; min-width: 140px; }
         .btn-chat { background: var(--primary); }
         .btn-img { background: var(--secondary); }
-        button:hover { opacity: 0.8; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
-        
+        button:disabled { background: #ccc; }
         .loading { font-style: italic; color: #777; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>Gemini AI Assistant</header>
+        <header>Gemini 3 AI Assistant</header>
         
         <div id="chat-box">
-            <div class="msg ai">Hello! I can help you write code, answer questions, or even create images. What's on your mind?</div>
+            <div class="msg ai">I am now updated to Gemini 3! Ask me anything or describe an image for me to create.</div>
         </div>
 
         <div id="image-result">
-            <div id="img-status" class="loading">Images you create will appear here...</div>
-            <img id="generated-img" alt="Gemini Generated Image">
+            <div id="img-status" class="loading">Images will appear here...</div>
+            <img id="generated-img">
         </div>
 
         <div class="controls">
-            <input type="text" id="user-input" placeholder="Type a message or image prompt...">
-        </div>
-        <div class="controls" style="padding-top: 0; justify-content: center;">
+            <input type="text" id="user-input" placeholder="Enter message or image prompt...">
             <button class="btn-chat" onclick="handleAction('chat')" id="chat-btn">Send Message</button>
             <button class="btn-img" onclick="handleAction('image')" id="img-btn">Create Image</button>
         </div>
@@ -59,7 +51,7 @@
     <script type="module">
         import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        // YOUR API KEY INTEGRATED
+        // Your API Key
         const API_KEY = "AIzaSyB5JvE-0ETjD-gP-JQW64FLyCAfsL8yStQ";
         const genAI = new GoogleGenerativeAI(API_KEY);
 
@@ -72,56 +64,12 @@
             const prompt = userInput.value.trim();
             if (!prompt) return;
 
-            // Disable buttons while loading
             setLoading(true);
 
-            if (type === 'chat') {
-                appendMessage(prompt, 'user');
-                userInput.value = '';
-                try {
-                    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-                    const result = await model.generateContent(prompt);
-                    appendMessage(result.response.text(), 'ai');
-                } catch (err) {
-                    appendMessage("Error: " + err.message, 'ai');
-                }
-            } 
-            else if (type === 'image') {
-                imgStatus.innerText = "Generating image... please wait (this can take 10-20 seconds)";
-                imgDisplay.style.display = 'none';
-                
-                try {
-                    // Using the 2026 Nano Banana 2 model for image generation
-                    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-image" });
-                    const result = await model.generateContent(prompt);
+            try {
+                if (type === 'chat') {
+                    appendMessage(prompt, 'user');
+                    userInput.value = '';
                     
-                    // Note: API returns image as base64 in 2026
-                    const imageData = result.response.candidates[0].content.parts[0].inlineData.data;
-                    imgDisplay.src = `data:image/png;base64,${imageData}`;
-                    imgDisplay.style.display = 'block';
-                    imgStatus.innerText = "";
-                } catch (err) {
-                    imgStatus.innerText = "Error creating image. Ensure your prompt is descriptive.";
-                    console.error(err);
-                }
-            }
-
-            setLoading(false);
-        };
-
-        function appendMessage(text, sender) {
-            const div = document.createElement('div');
-            div.className = `msg ${sender}`;
-            div.innerText = text;
-            chatBox.appendChild(div);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        function setLoading(isLoading) {
-            document.getElementById('chat-btn').disabled = isLoading;
-            document.getElementById('img-btn').disabled = isLoading;
-            userInput.disabled = isLoading;
-        }
-    </script>
-</body>
-</html>
+                    // FIXED: Using Gemini 3 Flash (The latest 2026 stable model)
+                    const model = genAI.getGenerativeModel
