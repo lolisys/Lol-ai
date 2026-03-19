@@ -1,3 +1,80 @@
-<button onclick="window.location.href='tel:*165*1*1*0770000000%23'">
-   Pay Merchant Now
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtel Money Clone - Selar</title>
+    <style>
+        :root { --airtel-red: #ff0000; --dark-gray: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; display: flex; justify-content: center; }
+        .mobile-container { width: 100%; max-width: 400px; background: white; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        
+        /* Header */
+        .header { background: var(--airtel-red); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        .balance-card { background: white; color: var(--dark-gray); margin: -20px 20px 0; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        .balance-amount { font-size: 1.5rem; font-weight: bold; color: var(--airtel-red); }
+
+        /* Grid Menu */
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 25px; }
+        .menu-item { text-align: center; cursor: pointer; transition: 0.2s; }
+        .menu-item:active { transform: scale(0.9); }
+        .icon-circle { width: 60px; height: 60px; background: #fff1f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--airtel-red); font-size: 24px; border: 1px solid #ffebeb; }
+        .menu-label { font-size: 0.8rem; font-weight: 500; color: #555; }
+
+        /* Action Button */
+        .pay-btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: var(--airtel-red); color: white; text-align: center; text-decoration: none; border-radius: 30px; font-weight: bold; }
+        
+        .footer-nav { position: fixed; bottom: 0; width: 100%; max-width: 400px; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <div class="header">
+        <h2 style="margin:0;">airtel money</h2>
+        <p style="font-size: 0.8rem; opacity: 0.9;">The Smartphone Network</p>
+    </div>
+
+    <div class="balance-card">
+        <p style="margin:0; font-size: 0.9rem; color: #888;">Account Balance</p>
+        <div class="balance-amount">UGX 450,000</div>
+    </div>
+
+    <div class="menu-grid">
+        <div class="menu-item" onclick="location.href='tel:*185*1%23'">
+            <div class="icon-circle">💸</div>
+            <div class="menu-label">Send Money</div>
+        </div>
+        <div class="menu-item" onclick="location.href='tel:*185*2%23'">
+            <div class="icon-circle">📱</div>
+            <div class="menu-label">Airtime</div>
+        </div>
+        <div class="menu-item" onclick="location.href='tel:*185*4%23'">
+            <div class="icon-circle">🧾</div>
+            <div class="menu-label">Pay Bill</div>
+        </div>
+        <div class="menu-item" onclick="location.href='tel:*185*3%23'">
+            <div class="icon-circle">🏧</div>
+            <div class="menu-label">Withdraw</div>
+        </div>
+        <div class="menu-item">
+            <div class="icon-circle">🌐</div>
+            <div class="menu-label">Data</div>
+        </div>
+        <div class="menu-item">
+            <div class="icon-circle">🏪</div>
+            <div class="menu-label">Selar Pay</div>
+        </div>
+    </div>
+
+    <a href="tel:*185%23" class="pay-btn">Quick Dial *185#</a>
+
+    <div class="footer-nav">
+        <span>🏠 Home</span>
+        <span>📊 History</span>
+        <span>👤 Profile</span>
+    </div>
+</div>
+
+</body>
+</html>
