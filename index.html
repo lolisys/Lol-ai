@@ -3,111 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airtel Money - Secure Login</title>
+    <title>Selar Merchant - Powered by Airtel</title>
     <style>
-        :root { --airtel-red: #ff0000; --dark-gray: #333; --bg: #f0f0f0; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 0; display: flex; justify-content: center; }
+        :root { 
+            --airtel-red: #ff0000; 
+            --selar-blue: #002d5b; 
+            --gold: #ffb400;
+            --bg: #f4f7f6; 
+        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; display: flex; justify-content: center; }
         
-        /* Layout Container */
-        .mobile-container { width: 100%; max-width: 400px; background: white; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.1); position: relative; }
+        .mobile-container { width: 100%; max-width: 400px; background: white; min-height: 100vh; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
         .hidden { display: none !important; }
 
-        /* LOGIN PAGE STYLING */
-        #login-view { padding: 40px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
-        .airtel-logo { color: var(--airtel-red); font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; }
-        .login-box { width: 100%; margin-top: 30px; }
-        input { width: 90%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; }
-        input:focus { border-color: var(--airtel-red); }
-        .btn-submit { width: 90%; padding: 15px; background: var(--airtel-red); color: white; border: none; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 20px; }
-        #error-msg { color: var(--airtel-red); font-size: 0.9rem; margin-top: 15px; font-weight: 500; }
+        /* --- PROFESSIONAL PARTNERSHIP LOGO --- */
+        .brand-header { padding: 40px 20px; text-align: center; }
+        .logo-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+        .selar-logo { font-size: 2.2rem; font-weight: 900; color: var(--selar-blue); letter-spacing: -1.5px; }
+        .divider { width: 2px; height: 30px; background: #ddd; }
+        .airtel-side { color: var(--airtel-red); font-weight: bold; font-size: 1.4rem; }
+        .merchant-badge { background: #f0f2f5; color: #555; font-size: 0.7rem; font-weight: bold; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 5px; letter-spacing: 1px; }
 
-        /* DASHBOARD STYLING */
-        .header { background: var(--airtel-red); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: relative; }
-        .logout-btn { position: absolute; top: 20px; right: 15px; color: white; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        /* --- LOGIN VIEW --- */
+        #login-view { padding: 20px; animation: fadeIn 0.5s; }
+        .login-card { background: white; padding: 25px; border-radius: 20px; border: 1px solid #eee; }
+        input { width: 100%; padding: 16px; margin: 10px 0; border: 1.5px solid #eee; border-radius: 12px; font-size: 1rem; box-sizing: border-box; transition: 0.3s; background: #f9f9f9; }
+        input:focus { border-color: var(--airtel-red); background: white; outline: none; }
+        .btn-submit { width: 100%; padding: 16px; background: var(--airtel-red); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2); }
+        #error-msg { color: var(--airtel-red); font-size: 0.85rem; margin-top: 15px; text-align: center; font-weight: 500; }
+
+        /* --- DASHBOARD VIEW --- */
+        .dash-top { background: linear-gradient(135deg, var(--airtel-red) 0%, #b30000 100%); color: white; padding: 25px 20px 50px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; position: relative; }
+        .logout-link { float: right; font-size: 0.8rem; opacity: 0.8; text-decoration: underline; cursor: pointer; }
         
-        .balance-card { background: white; color: var(--dark-gray); margin: -20px 20px 0; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .balance-amount { font-size: 1.5rem; font-weight: bold; color: var(--airtel-red); }
+        .balance-card { background: white; margin: -30px 20px 0; padding: 20px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; border: 1px solid rgba(0,0,0,0.03); }
+        .balance-label { font-size: 0.8rem; color: #888; font-weight: 600; text-transform: uppercase; margin-bottom: 5px; }
+        .balance-amount { font-size: 1.8rem; font-weight: 800; color: var(--selar-blue); }
 
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 25px; }
-        .menu-item { text-align: center; cursor: pointer; transition: 0.2s; }
-        .menu-item:active { transform: scale(0.9); }
-        .icon-circle { width: 60px; height: 60px; background: #fff1f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--airtel-red); font-size: 24px; border: 1px solid #ffebeb; }
-        .menu-label { font-size: 0.8rem; font-weight: 500; color: #555; }
+        /* --- MENU GRID --- */
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 30px 25px; }
+        .menu-item { text-align: center; cursor: pointer; }
+        .icon-box { width: 65px; height: 65px; background: #fff; border-radius: 22px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; transition: 0.3s; }
+        .menu-item:hover .icon-box { transform: translateY(-5px); border-color: var(--airtel-red); }
+        .menu-label { font-size: 0.75rem; font-weight: 700; color: #444; }
 
-        .pay-btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: var(--airtel-red); color: white; text-align: center; text-decoration: none; border-radius: 30px; font-weight: bold; }
+        .id-footer { text-align: center; padding: 20px; color: #bbb; font-size: 0.7rem; font-weight: bold; }
         
-        .footer-nav { position: absolute; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="mobile-container">
     
+    <div class="brand-header">
+        <div class="logo-wrap">
+            <span class="selar-logo">Selar</span>
+            <div class="divider"></div>
+            <span class="airtel-side">airtel</span>
+        </div>
+        <div class="merchant-badge">OFFICIAL MERCHANT PARTNER</div>
+    </div>
+
     <div id="login-view">
-        <div class="airtel-logo">airtel</div>
-        <p style="color: #666;">Secure Login for Selar App</p>
-        
-        <div class="login-box">
-            <input type="text" id="username" placeholder="Phone Number or Username">
-            <input type="password" id="pin" placeholder="Enter Secret PIN">
-            <button class="btn-submit" onclick="validateLogin()">Login</button>
+        <div class="login-card">
+            <label style="font-size: 0.75rem; font-weight: 800; color: #aaa;">MERCHANT ACCESS</label>
+            <input type="text" id="username" placeholder="Phone Number / ID">
+            <input type="password" id="pin" placeholder="Merchant PIN">
+            <button class="btn-submit" onclick="validateLogin()">Access Dashboard</button>
             <div id="error-msg"></div>
         </div>
-        <p style="font-size: 0.8rem; color: #999; margin-top: 40px;">Unauthorized access is prohibited.</p>
+        <p style="text-align: center; font-size: 0.7rem; color: #999; margin-top: 30px; line-height: 1.5;">
+            Protected by Airtel Security Encryption.<br>Merchant ID: #55230-UG
+        </p>
     </div>
 
     <div id="dashboard-view" class="hidden">
-        <div class="header">
-            <span class="logout-btn" onclick="logout()">Logout</span>
-            <h2 style="margin:0;">airtel money</h2>
-            <p style="font-size: 0.8rem; opacity: 0.9;">The Smartphone Network</p>
+        <div class="dash-top">
+            <span class="logout-link" onclick="logout()">Secure Logout</span>
+            <div style="font-weight: 700;">Welcome, Merchant</div>
+            <div style="font-size: 0.8rem; opacity: 0.8;">ID: 55230-UGANDA</div>
         </div>
 
         <div class="balance-card">
-            <p style="margin:0; font-size: 0.9rem; color: #888;">Account Balance</p>
-            <div class="balance-amount">UGX 450,000</div>
+            <div class="balance-label">Total Floating Balance</div>
+            <div class="balance-amount">UGX 1,240,000</div>
         </div>
 
         <div class="menu-grid">
             <div class="menu-item" onclick="dial('*185*1#')">
-                <div class="icon-circle">💸</div>
-                <div class="menu-label">Send Money</div>
+                <div class="icon-box">💸</div>
+                <div class="menu-label">Transfer</div>
             </div>
             <div class="menu-item" onclick="dial('*185*2#')">
-                <div class="icon-circle">📱</div>
+                <div class="icon-box">📱</div>
                 <div class="menu-label">Airtime</div>
             </div>
             <div class="menu-item" onclick="dial('*185*4#')">
-                <div class="icon-circle">🧾</div>
-                <div class="menu-label">Pay Bill</div>
+                <div class="icon-box">🧾</div>
+                <div class="menu-label">Collections</div>
             </div>
             <div class="menu-item" onclick="dial('*185*3#')">
-                <div class="icon-circle">🏧</div>
+                <div class="icon-box">🏧</div>
                 <div class="menu-label">Withdraw</div>
             </div>
             <div class="menu-item">
-                <div class="icon-circle">🌐</div>
-                <div class="menu-label">Data</div>
+                <div class="icon-box" style="color: var(--gold);">⭐</div>
+                <div class="menu-label">Special</div>
             </div>
             <div class="menu-item">
-                <div class="icon-circle">🏪</div>
-                <div class="menu-label">Selar Pay</div>
+                <div class="icon-box">📊</div>
+                <div class="menu-label">Insights</div>
             </div>
         </div>
 
-        <button onclick="dial('*185#')" class="pay-btn">Quick Dial *185#</button>
-
-        <div class="footer-nav">
-            <span>🏠 Home</span>
-            <span>📊 History</span>
-            <span>👤 Profile</span>
+        <div class="id-footer">
+            POWERED BY AIRTEL MONEY &bull; SELAR SYSTEMS v3.1
         </div>
     </div>
 
 </div>
 
 <script>
-    // CREDENTIALS CONFIG
     const VALID_USER = "admin";
     const VALID_PIN = "1234";
 
@@ -117,13 +134,11 @@
         const error = document.getElementById('error-msg');
 
         if (user === VALID_USER && pin === VALID_PIN) {
-            // Success
             document.getElementById('login-view').classList.add('hidden');
             document.getElementById('dashboard-view').classList.remove('hidden');
         } else {
-            // Failure
-            error.innerText = "Invalid Username or PIN. Please try again.";
-            document.getElementById('pin').value = ""; // Clear pin
+            error.innerText = "Security Alert: Incorrect Credentials";
+            document.getElementById('pin').value = "";
         }
     }
 
@@ -131,13 +146,10 @@
         document.getElementById('login-view').classList.remove('hidden');
         document.getElementById('dashboard-view').classList.add('hidden');
         document.getElementById('pin').value = "";
-        document.getElementById('error-msg').innerText = "";
     }
 
     function dial(code) {
-        // Formats the # for the phone dialer
-        const formattedCode = code.replace("#", "%23");
-        window.location.href = "tel:" + formattedCode;
+        window.location.href = "tel:" + code.replace("#", "%23");
     }
 </script>
 
